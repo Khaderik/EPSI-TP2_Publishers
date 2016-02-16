@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿// Fonction de gestion de la pagination
+$(function () {
     $("#nomAuteur").change(function () {
         $("#PageCourante").val(1);
     });
@@ -31,3 +32,34 @@
         $("#formRecherche").submit();
     });
 });
+
+
+// Fonction de suppression d'un auteur (AJAX)
+$(function () {
+    function RemoveClick() {
+        // Get the id from the link
+        var tr = $(this).parent().parent();
+        var nom = tr.find("#nomAut").html();
+        var idToDelete = tr.attr("id");
+
+        if (idToDelete != '' && confirm('Voulez-vous supprimer l\'auteur:' + nom +  ' de votre panier ? ')) {
+            // Perform the ajax post
+            $.post("/authors/SupprAuteur", { "id": idToDelete },
+            function (data) {
+                // Successful requests get here
+                // Update the page elements
+                if (data.DeleteId != "0") {
+                    $('#' + data.DeleteId).fadeOut('slow');
+                }
+                $('#update-message').text(data.Message);
+                $('#update-message').show('slow', null).delay(3000).hide('slow');
+            });
+        }
+    };
+
+    // Document.ready -> link up remove event handler
+    $('a[name=supprAuteur]').bind('click', RemoveClick);
+});
+
+
+

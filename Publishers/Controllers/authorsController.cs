@@ -148,6 +148,40 @@ namespace Publishers.Controllers
             return RedirectToAction("Index");
         }
 
+        //POST: Suppression auteur ajax
+        [HttpPost]
+        public ActionResult SupprAuteur(string id)
+        {
+            string message = "L'auteur a bien été supprimé";
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                message = "Aucune clé ne correspond à l'auteur";
+            }
+            //Recherche de l'auteur
+            author AuteurADelete = db.authors.Where(aut => aut.au_id.Equals(id)).SingleOrDefault();
+            if (AuteurADelete == null)
+            {
+                message = "L'auteur n'existe pas, ou a déjà été supprimé";
+            }
+            else
+            {
+                try
+                {
+                    // Suppression du panier
+                    db.authors.Remove(AuteurADelete);
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    message = "L'auteur n'a pas pu être supprimé : " + ex.Message;
+                    id = "0";
+                }
+            }
+
+            return Json(new { DeleteId = id, Message = message });
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
