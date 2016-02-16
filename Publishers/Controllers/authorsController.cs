@@ -27,7 +27,14 @@ namespace Publishers.Controllers
             // Les critères de recherche
             if (!string.IsNullOrWhiteSpace(recherche.nomAuteur))
             {
-                lesAuteurs = lesAuteurs.Where(n => n.au_lname.StartsWith(recherche.nomAuteur));
+                if (recherche.typeRecherche == TypeRecherche.CommencePar)
+                {
+                    lesAuteurs = lesAuteurs.Where(n => n.au_lname.StartsWith(recherche.nomAuteur));
+                }
+                else
+                {
+                    lesAuteurs = lesAuteurs.Where(n => n.au_lname.Contains(recherche.nomAuteur));
+                }
             }
 
             lesAuteurs = lesAuteurs.OrderBy(a => a.au_lname);
