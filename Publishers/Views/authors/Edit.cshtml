@@ -4,15 +4,21 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+@* le helper qui permet de traiter la date en shortDate*@
+@helper ShortDate(DateTime dateAtraiter)
+{
+    @dateAtraiter.ToShortDateString();
+}
+
+<h2>Modification d'un auteur</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>author</h4>
+        <h4>Auteur</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.au_id)
@@ -85,14 +91,46 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Enregistrer" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
+<h2>Liste des ouvrages(@Model.titleauthors.Count()) </h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.LabelFor(model => model.titleauthors.First().title.title1)
+        </th>
+        <th>
+            @Html.LabelFor(model => model.titleauthors.First().title.type)
+        </th>
+        <th>
+            @Html.LabelFor(model => model.titleauthors.First().title.pubdate)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.titleauthors)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.title.title1, "Edit", "titles", new { id = item.title_id }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title.type)
+            </td>
+            <td>
+                @ShortDate(item.title.pubdate)
+            </td>
+        </tr>
+    }
+</table>
+
+
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retour à la liste", "Index")
 </div>
 
 @section Scripts {

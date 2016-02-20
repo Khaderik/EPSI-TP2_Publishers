@@ -42,7 +42,7 @@ $(function () {
         var nom = tr.find("#nomAut").html();
         var idToDelete = tr.attr("id");
 
-        if (idToDelete != '' && confirm('Voulez-vous supprimer l\'auteur:' + nom +  ' de votre panier ? ')) {
+        if (idToDelete != '' && confirm('Voulez-vous supprimer l\'auteur:' + nom +  ' ? ')) {
             // Perform the ajax post
             $.post("/authors/SupprAuteur", { "id": idToDelete },
             function (data) {
