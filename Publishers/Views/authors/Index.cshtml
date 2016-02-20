@@ -32,11 +32,11 @@
 @*Affichage des pages avec les boutons précédent, suivant, etc. Les boutons sont gérés par le script « liste.js »*@
 @Html.PagedListPager(Model as PagedList.IPagedList, page => "#")
 
-@*Affichage des résultats*@
 <div id="update-message" class="alert alert-info" style="display: none"></div>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+@*Affichage des résultats*@
 <table class="table">
     <tr>
         <th>
@@ -106,5 +106,5 @@
 @* Script pour la pagination *@
 
 @section scripts {
-    <script src="/Scripts/Site/liste.js" type="text/javascript"></script>
+    <script src="/Scripts/Site/Auteurs.js" type="text/javascript"></script>
 }

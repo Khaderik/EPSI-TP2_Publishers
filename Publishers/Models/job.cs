@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Publishers.Models
 {
@@ -11,6 +12,7 @@ namespace Publishers.Models
         }
 
         public short job_id { get; set; }
+        [DisplayName("Description du poste")]
         public string job_desc { get; set; }
         public byte min_lvl { get; set; }
         public byte max_lvl { get; set; }
